@@ -52,7 +52,7 @@ spec:
               memory: 10Mi
           volumeMounts:
             - name: cnibin
-              mountPath: /host/opt/cni/bin
+              mountPath: /proc/1/root/opt/cni/bin
         - name: sriov-infiniband-cni
           image: {{.SRIOVInfiniBandCNIImage}}
           command:
