@@ -234,7 +234,7 @@ var _ = Describe("Config Daemon", func() {
 
 		It("configure udev rules on host", func() {
 
-			networkManagerUdevRulePath := path.Join(filesystemRoot, "host/etc/udev/rules.d/10-nm-unmanaged.rules")
+			networkManagerUdevRulePath := path.Join(filesystemRoot, "proc/1/root/etc/udev/rules.d/10-nm-unmanaged.rules")
 
 			expectedContents := `ACTION=="add|change|move", ATTRS{device}=="0x1014|0x154c", ENV{NM_UNMANAGED}="1"
 SUBSYSTEM=="net", ACTION=="add|move", ATTRS{phys_switch_id}!="", ATTR{phys_port_name}=="pf*vf*", ENV{NM_UNMANAGED}="1"
