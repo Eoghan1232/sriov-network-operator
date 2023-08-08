@@ -1040,7 +1040,7 @@ func (dn *Daemon) drainNode() error {
 func tryCreateSwitchdevUdevRule(nodeState *sriovnetworkv1.SriovNetworkNodeState) error {
 	glog.V(2).Infof("tryCreateSwitchdevUdevRule()")
 	var newContent string
-	filePath := path.Join(filesystemRoot, "/proc/1/root/etc/udev/rules.d/20-switchdev.rules")
+	filePath := path.Join(filesystemRoot, "/host/etc/udev/rules.d/20-switchdev.rules")
 
 	for _, ifaceStatus := range nodeState.Status.Interfaces {
 		if ifaceStatus.EswitchMode == sriovnetworkv1.ESwithModeSwitchDev {
