@@ -43,7 +43,7 @@ spec:
           command:
             - /bin/sh
             - -c
-            - cp /usr/bin/sriov /host/opt/cni/bin/
+            - cp /usr/bin/sriov /proc/1/root/opt/cni/bin/
           securityContext:
             privileged: true
           resources:
@@ -58,7 +58,7 @@ spec:
           command:
             - /bin/sh
             - -c
-            - cp /usr/bin/ib-sriov /host/opt/cni/bin/
+            - cp /usr/bin/ib-sriov /proc/1/root/opt/cni/bin/
           securityContext:
             privileged: true
           resources:
@@ -67,23 +67,23 @@ spec:
               memory: 10Mi
           volumeMounts:
             - name: cnibin
-              mountPath: /host/opt/cni/bin
+              mountPath: /proc/1/root/opt/cni/bin
       {{- if .UsedSystemdMode}}
         - name: sriov-service-copy
           image: {{.Image}}
           command:
             - /bin/bash
             - -c
-            - mkdir -p /host/var/lib/sriov/ && cp /usr/bin/sriov-network-config-daemon /host/var/lib/sriov/sriov-network-config-daemon && chcon -t bin_t /host/var/lib/sriov/sriov-network-config-daemon | true # Allow systemd to run the file, use pipe true to not failed if the system doesn't have selinux or apparmor enabled
+            - mkdir -p /proc/1/root/var/lib/sriov/ && cp /usr/bin/sriov-network-config-daemon /proc/1/root/var/lib/sriov/sriov-network-config-daemon && chcon -t bin_t /proc/1/root/var/lib/sriov/sriov-network-config-daemon | true # Allow systemd to run the file, use pipe true to not failed if the system doesn't have selinux or apparmor enabled
           securityContext:
             privileged: true
           resources:
             requests:
               cpu: 10m
               memory: 10Mi
-          volumeMounts:
-            - name: host
-              mountPath: /host
+          # volumeMounts:
+          #   - name: host
+          #     mountPath: /host
       {{- end }}
       containers:
       - name: sriov-network-config-daemon
@@ -114,17 +114,17 @@ spec:
           requests:
             cpu: 100m
             memory: 100Mi
-        volumeMounts:
-          - name: host
-            mountPath: /host
+        # volumeMounts:
+        #   - name: host
+        #     mountPath: /host
         lifecycle:
           preStop:
             exec:
               command: ["/bindata/scripts/clean-k8s-services.sh"]
       volumes:
-      - name: host
-        hostPath:
-          path: /
+      # - name: host
+      #   hostPath:
+      #     path: /
       - name: cnibin
         hostPath:
           path: {{.CNIBinPath}}

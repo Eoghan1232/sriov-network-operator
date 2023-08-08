@@ -289,7 +289,7 @@ func GetNodeSecureBootState(clients *testclient.ClientSet, nodeName, namespace s
 	podDefinition.Namespace = namespace
 
 	volume := corev1.Volume{Name: "host", VolumeSource: corev1.VolumeSource{HostPath: &corev1.HostPathVolumeSource{Path: "/"}}}
-	mount := corev1.VolumeMount{Name: "host", MountPath: "/host"}
+	mount := corev1.VolumeMount{Name: "host", MountPath: "/proc/1/root"}
 	podDefinition = pod.RedefineWithMount(podDefinition, volume, mount)
 	created, err := clients.Pods(namespace).Create(context.Background(), podDefinition, metav1.CreateOptions{})
 	if err != nil {
@@ -320,7 +320,7 @@ func GetNodeSecureBootState(clients *testclient.ClientSet, nodeName, namespace s
 		return false, err
 	}
 
-	stdout, _, err := pod.ExecCommand(clients, runningPod, "cat", "/host/sys/kernel/security/lockdown")
+	stdout, _, err := pod.ExecCommand(clients, runningPod, "cat", "/proc/1/root/sys/kernel/security/lockdown")
 
 	if strings.Contains(stdout, "No such file or directory") {
 		return false, nil

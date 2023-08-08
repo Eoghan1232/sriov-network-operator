@@ -49,7 +49,7 @@ var (
 )
 
 const (
-	ospHostMetaDataDir     = "/host/var/config/openstack/2018-08-27"
+	ospHostMetaDataDir     = "/proc/1/root/var/config/openstack/2018-08-27"
 	ospMetaDataDir         = "/var/config/openstack/2018-08-27"
 	ospMetaDataBaseURL     = "http://169.254.169.254/openstack/2018-08-27"
 	ospHostNetworkDataFile = ospHostMetaDataDir + "/network_data.json"

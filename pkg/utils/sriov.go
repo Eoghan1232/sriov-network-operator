@@ -29,9 +29,9 @@ import (
 
 const (
 	SriovConfBasePath          = "/etc/sriov-operator"
-	HostSriovConfBasePath      = "/host" + SriovConfBasePath
+	HostSriovConfBasePath      = "/proc/1/root" + SriovConfBasePath
 	SriovSwitchDevConfPath     = SriovConfBasePath + "/sriov_config.json"
-	SriovHostSwitchDevConfPath = "/host" + SriovSwitchDevConfPath
+	SriovHostSwitchDevConfPath = "/proc/1/root" + SriovSwitchDevConfPath
 )
 
 type config struct {
@@ -107,8 +107,8 @@ func WriteSwitchdevConfFile(newState *sriovnetworkv1.SriovNetworkNodeState) (upd
 			}
 
 			// Create the sriov-operator folder on the host if it doesn't exist
-			if _, err := os.Stat("/host" + SriovConfBasePath); os.IsNotExist(err) {
-				err = os.Mkdir("/host"+SriovConfBasePath, os.ModeDir)
+			if _, err := os.Stat("/proc/1/root" + SriovConfBasePath); os.IsNotExist(err) {
+				err = os.Mkdir("/proc/1/root"+SriovConfBasePath, os.ModeDir)
 				if err != nil {
 					glog.Errorf("WriteConfFile(): fail to create sriov-operator folder: %v", err)
 					return false, err

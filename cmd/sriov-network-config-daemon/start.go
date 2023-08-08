@@ -102,7 +102,7 @@ func runStartCmd(cmd *cobra.Command, args []string) {
 	var err error
 
 	if os.Getenv("CLUSTER_TYPE") == utils.ClusterTypeOpenshift {
-		kubeconfig, err := clientcmd.LoadFromFile("/host/etc/kubernetes/kubeconfig")
+		kubeconfig, err := clientcmd.LoadFromFile("/proc/1/root/etc/kubernetes/kubeconfig")
 		if err != nil {
 			glog.Errorf("failed to load kubelet kubeconfig: %v", err)
 		}
@@ -164,7 +164,7 @@ func runStartCmd(cmd *cobra.Command, args []string) {
 
 	destdir := os.Getenv("DEST_DIR")
 	if destdir == "" {
-		destdir = "/host/tmp"
+		destdir = "/proc/1/root/tmp"
 	}
 
 	platformType := utils.Baremetal

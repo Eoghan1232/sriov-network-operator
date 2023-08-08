@@ -3,27 +3,27 @@ set -x
 
 declare -a kargs=( "$@" )
 ret=0
-args=$(chroot /host/ cat /proc/cmdline)
+args=$(chroot /proc/1/root/ cat /proc/cmdline)
 
-if chroot /host/ test -f /run/ostree-booted ; then
+if chroot proc/1/root/ test -f /run/ostree-booted ; then
     for t in "${kargs[@]}";do
         if [[ $args != *${t}* ]];then
-            if chroot /host/ rpm-ostree kargs | grep -vq ${t}; then
-                chroot /host/ rpm-ostree kargs --append ${t} > /dev/null 2>&1
+            if chroot /proc/1/root/ rpm-ostree kargs | grep -vq ${t}; then
+                chroot /proc/1/root/ rpm-ostree kargs --append ${t} > /dev/null 2>&1
             fi
             let ret++
         fi
     done
 else
-    chroot /host/ which grubby > /dev/null 2>&1
+    chroot /proc/1/root/ which grubby > /dev/null 2>&1
     # if grubby is not there, let's tell it
     if [ $? -ne 0 ]; then
         exit 127
     fi
     for t in "${kargs[@]}";do
         if [[ $args != *${t}* ]];then
-            if chroot /host/ grubby --info=DEFAULT | grep args | grep -vq ${t}; then
-                chroot /host/ grubby --update-kernel=DEFAULT --args=${t} > /dev/null 2>&1
+            if chroot /proc/1/root/ grubby --info=DEFAULT | grep args | grep -vq ${t}; then
+                chroot /proc/1/root/ grubby --update-kernel=DEFAULT --args=${t} > /dev/null 2>&1
             fi
             let ret++
         fi
