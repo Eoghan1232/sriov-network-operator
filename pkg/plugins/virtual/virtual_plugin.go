@@ -98,7 +98,7 @@ func (p *VirtualPlugin) Apply() error {
 			return nil
 		}
 	}
-	exit, err := utils.Chroot("/host")
+	exit, err := utils.Chroot("/proc/1/root")
 	if err != nil {
 		return err
 	}

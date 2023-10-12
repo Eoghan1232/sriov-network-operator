@@ -761,9 +761,9 @@ func isSwitchdev(name string) bool {
 
 // IsKernelLockdownMode returns true when kernel lockdown mode is enabled
 func IsKernelLockdownMode(chroot bool) bool {
-	path := "/sys/kernel/security/lockdown"
+	path := "/proc/1/root/sys/kernel/security/lockdown"
 	if !chroot {
-		path = "/host" + path
+		path = "/proc/1/root" + path
 	}
 	out, err := RunCommand("cat", path)
 	glog.V(2).Infof("IsKernelLockdownMode(): %s, %+v", out, err)

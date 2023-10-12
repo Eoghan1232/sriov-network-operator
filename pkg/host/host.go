@@ -27,7 +27,7 @@ import (
 )
 
 const (
-	hostPathFromDaemon    = "/host"
+	hostPathFromDaemon    = "/proc/1/host"
 	redhatReleaseFile     = "/etc/redhat-release"
 	rhelRDMAConditionFile = "/usr/libexec/rdma-init-kernel"
 	rhelRDMAServiceName   = "rdma"
@@ -449,7 +449,7 @@ func (h *HostManager) getOSPrettyName() (string, error) {
 
 func getChrootExtention(runOnHost bool) string {
 	if !runOnHost {
-		return "chroot /host/"
+		return "chroot /proc/1/root"
 	}
 	return ""
 }

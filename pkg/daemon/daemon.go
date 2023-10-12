@@ -159,7 +159,7 @@ func New(
 		client:            client,
 		kubeClient:        kubeClient,
 		openshiftContext:  openshiftContext,
-		serviceManager:    service.NewServiceManager("/host"),
+		serviceManager:    service.NewServiceManager("/proc/1/root"),
 		exitCh:            exitCh,
 		stopCh:            stopCh,
 		syncCh:            syncCh,
@@ -780,7 +780,7 @@ func (dn *Daemon) restartDevicePluginPod() error {
 
 func rebootNode() {
 	glog.Infof("rebootNode(): trigger node reboot")
-	exit, err := utils.Chroot("/host")
+	exit, err := utils.Chroot("/proc/1/root")
 	if err != nil {
 		glog.Errorf("rebootNode(): %v", err)
 	}
@@ -1040,7 +1040,7 @@ func (dn *Daemon) drainNode() error {
 func tryCreateSwitchdevUdevRule(nodeState *sriovnetworkv1.SriovNetworkNodeState) error {
 	glog.V(2).Infof("tryCreateSwitchdevUdevRule()")
 	var newContent string
-	filePath := path.Join(filesystemRoot, "/host/etc/udev/rules.d/20-switchdev.rules")
+	filePath := path.Join("/proc/1/root", filesystemRoot, "/etc/udev/rules.d/20-switchdev.rules")
 
 	for _, ifaceStatus := range nodeState.Status.Interfaces {
 		if ifaceStatus.EswitchMode == sriovnetworkv1.ESwithModeSwitchDev {
@@ -1097,7 +1097,7 @@ func tryCreateSwitchdevUdevRule(nodeState *sriovnetworkv1.SriovNetworkNodeState)
 
 func tryCreateNMUdevRule() error {
 	glog.V(2).Infof("tryCreateNMUdevRule()")
-	dirPath := path.Join(filesystemRoot, "/host/etc/udev/rules.d")
+	dirPath := path.Join(filesystemRoot, "/proc/1/root/etc/udev/rules.d")
 	filePath := path.Join(dirPath, "10-nm-unmanaged.rules")
 
 	// we need to remove the Red Hat Virtio network device from the udev rule configuration

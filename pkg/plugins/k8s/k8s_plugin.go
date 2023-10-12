@@ -94,7 +94,7 @@ const (
 	configuresSwitchdevAfterNMScript  = switchdevManifestPath + "files/switchdev-configuration-after-nm.sh.yaml"
 	switchdevRenamingUdevScript       = switchdevManifestPath + "files/switchdev-vf-link-name.sh.yaml"
 
-	chroot = "/host"
+	chroot = "/proc/1/root"
 )
 
 // Initialize our plugin and set up initial values

@@ -35,13 +35,13 @@ const (
 	sriovSystemdSupportedNicPath  = utils.SriovConfBasePath + "/sriov-supported-nics-ids.yaml"
 	sriovSystemdServiceBinaryPath = "/var/lib/sriov/sriov-network-config-daemon"
 
-	SriovHostSystemdConfigPath        = "/host" + SriovSystemdConfigPath
-	SriovHostSystemdResultPath        = "/host" + SriovSystemdResultPath
-	sriovHostSystemdSupportedNicPath  = "/host" + sriovSystemdSupportedNicPath
-	sriovHostSystemdServiceBinaryPath = "/host" + sriovSystemdServiceBinaryPath
+	SriovHostSystemdConfigPath        = "/proc/1/root" + SriovSystemdConfigPath
+	SriovHostSystemdResultPath        = "/proc/1/root" + SriovSystemdResultPath
+	sriovHostSystemdSupportedNicPath  = "/proc/1/root" + sriovSystemdSupportedNicPath
+	sriovHostSystemdServiceBinaryPath = "/proc/1/root" + sriovSystemdServiceBinaryPath
 
 	SriovServicePath     = "/etc/systemd/system/sriov-config.service"
-	SriovHostServicePath = "/host" + SriovServicePath
+	SriovHostServicePath = "/proc/1/root" + SriovServicePath
 )
 
 type SriovConfig struct {
