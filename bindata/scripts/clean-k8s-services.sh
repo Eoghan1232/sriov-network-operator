@@ -5,7 +5,7 @@ if [ "$CLUSTER_TYPE" == "openshift" ]; then
   exit
 fi
 
-chroot_path="/proc/1/host"
+chroot_path="/proc/1/root"
 
 function clean_services() {
   # Remove switchdev service files
